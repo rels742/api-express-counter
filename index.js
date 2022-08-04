@@ -8,6 +8,7 @@ app.use(cors());
 app.use(express.json());
 
 let counter = 0;
+let counters = {};
 
 app.get("/counter", (req, res) => {
   //   console.log("we're working fine over here!");
@@ -26,26 +27,26 @@ app.delete("/counter", (req, res) => {
 });
 
 app.post("/counter/increment", (req, res) => {
-  const incrementCounter = counter + 1;
+  counter = counter + 1;
 
   res.status(201).json({
-    counter: incrementCounter,
+    counter: counter,
   });
 });
 
 app.post("/counter/decrement", (req, res) => {
-  const decrementCounter = counter - 1;
+  counter = counter - 1;
 
   res.status(201).json({
-    counter: decrementCounter,
+    counter: counter,
   });
 });
 
 app.post("/counter/double", (req, res) => {
-  const doubleCounter = counter * 2;
+  counter = counter * 2;
 
   res.status(201).json({
-    counter: doubleCounter,
+    counter: counter,
   });
 });
 
@@ -55,6 +56,33 @@ app.put("/counter", (req, res) => {
 
   res.status(201).json({
     counter: counter,
+  });
+});
+
+app.get("/counter/:name", (req, res) => {
+  const name = req.params.name;
+  if (!counters[name]) {
+    counters[name] = 0;
+  }
+  const value = counters[name];
+
+  res.json({
+    counter: value,
+  });
+});
+
+app.post("/counter/:name/increment", (req, res) => {
+  const name = req.params.name;
+  if (!counters[name]) {
+    counters[name] = 0;
+  }
+  //   const newValue = counters[name] + 1;
+  //   counters[name] = newValue;
+
+  counters[name]++;
+
+  res.json({
+    counter: counters[name],
   });
 });
 
