@@ -41,6 +41,23 @@ app.post("/counter/decrement", (req, res) => {
   });
 });
 
+app.post("/counter/double", (req, res) => {
+  const doubleCounter = counter * 2;
+
+  res.status(201).json({
+    counter: doubleCounter,
+  });
+});
+
+// set counter to a specific value via a query parameter
+app.put("/counter", (req, res) => {
+  counter = Number(req.query.value);
+
+  res.status(201).json({
+    counter: counter,
+  });
+});
+
 const port = 3030;
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}/`);
