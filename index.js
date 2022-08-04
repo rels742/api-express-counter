@@ -13,7 +13,31 @@ app.get("/counter", (req, res) => {
   //   console.log("we're working fine over here!");
 
   res.json({
-    counter: 0,
+    counter: counter,
+  });
+});
+
+app.delete("/counter", (req, res) => {
+  counter = 0;
+
+  res.json({
+    counter: counter,
+  });
+});
+
+app.post("/counter/increment", (req, res) => {
+  const incrementCounter = counter + 1;
+
+  res.status(201).json({
+    counter: incrementCounter,
+  });
+});
+
+app.post("/counter/decrement", (req, res) => {
+  const decrementCounter = counter - 1;
+
+  res.status(201).json({
+    counter: decrementCounter,
   });
 });
 
